@@ -6,7 +6,8 @@ package controller;
 
 /**
  *
- * @author steli
+ * @author stelio
+ * @author Sumeid
  */
 import java.util.Arrays;
 import java.util.List;
