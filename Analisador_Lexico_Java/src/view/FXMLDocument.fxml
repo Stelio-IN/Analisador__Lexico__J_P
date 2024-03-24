@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="analisador_lexico_java.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="analisador_lexico_java.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <AnchorPane prefHeight="600.0" prefWidth="800.0">
@@ -26,7 +26,7 @@
               </columns>
             </TableView>
             <TextArea layoutX="47.0" layoutY="55.0" prefHeight="319.0" prefWidth="419.0" />
-            <TextField layoutX="613.0" layoutY="222.0" prefHeight="43.0" prefWidth="175.0" text="10:00" />
+            <TextField disable="true" layoutX="613.0" layoutY="222.0" prefHeight="43.0" prefWidth="175.0" text="10:00" />
             <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="805.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
