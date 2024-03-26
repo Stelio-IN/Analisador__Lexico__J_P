@@ -39,5 +39,11 @@ public class Token {
     public void setLinha_token(String linha_token) {
         this.linha_token = linha_token;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" + "nome_token=" + nome_token + ", nome_lexema=" + nome_lexema + ", linha_token=" + linha_token + '}';
+    }
+    
     
 }
