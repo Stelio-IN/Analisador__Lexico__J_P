@@ -17,8 +17,10 @@ public class AnalisadorV1 {
     private final String IDENTIFICADOR = "Identificador";
     private final String OPERADOR_RELACIONAL = "Operador relacional";
     private final String SINAL_ATRIBUICAO = "Operador de atribuicao";
-
+    
     private static final String DIGITOS = "[0-9]+";
+    
+    private static String IDENTIFICADOREXPRESSAO = "[a-zA-Z_]+([0-9_]*[a-zA-Z]*)*";
 
     private static final List<String> PALAVRAS_RESERVADAS = Arrays.asList(
             "div", "or", "and", "not", "if", "then", "else", "of", "Record", "while",
@@ -43,6 +45,70 @@ public class AnalisadorV1 {
 
     private static final char especial = '\'';
     
+
+
+    public String validar(String palavra) {
+        // String lexema = palavra.trim(); // Remove espaços em branco do início e do fim
+
+        if (verificarPalavraReservada(palavra)) {
+            
+            if(palavra.equalsIgnoreCase("integer")||palavra.equalsIgnoreCase("char")||palavra.equalsIgnoreCase("boolean")){
+                return "<Value_Type>";
+            }
+            if(palavra.equalsIgnoreCase("div")){
+                return "<>";
+            }
+            if(palavra.equalsIgnoreCase("if")){
+                return "<>";
+            }
+            
+            return RESERVADA;
+        } else if (verificarDigito(palavra)) {
+            return DIGITO;
+        } else if (verificarOperador(palavra)) {
+            return OPERADOR;
+        } else if (verificarOperadorAtribuicao(palavra)) {
+            return SINAL_ATRIBUICAO;
+        } else if (verificarOperadorRelacional(palavra)) {
+            return OPERADOR_RELACIONAL;
+        } else if (verificarDelimitador(palavra)) {
+            return DELIMITADOR;
+        } else if (verificarIdentificador(palavra)) {
+            return IDENTIFICADOR;
+        } else {
+            return ERRO;
+        }
+    }
+
+    private boolean verificarPalavraReservada(String palavra) {
+        return PALAVRAS_RESERVADAS.contains(palavra.toLowerCase());
+    }
+
+    private boolean verificarDigito(String palavra) {
+        return palavra.matches(DIGITOS);
+    }
+      private boolean verificarIdentificador(String palavra) {
+        return palavra.matches(IDENTIFICADOREXPRESSAO);
+    }
+
+
+    private boolean verificarOperador(String palavra) {
+        return OPERADORES.contains(palavra);
+    }
+
+    private boolean verificarOperadorAtribuicao(String palavra) {
+        return Sinal_Atrib.equals(palavra);
+    }
+
+    private boolean verificarOperadorRelacional(String palavra) {
+        return OPERADORES_RELACIONAIS.contains(palavra);
+    }
+
+    private boolean verificarDelimitador(String palavra) {
+        return DELIMITADORES.contains(palavra);
+    }
+    
+       /*
     public static boolean isValidPascalIdentifier(String str) {
         if (str == null || str.isEmpty()) {
             return false;
@@ -65,107 +131,5 @@ public class AnalisadorV1 {
             }
         }
         return true;
-    }/*
-       
-    public static boolean isValidPascalIdentifier(String str) {
-    if (str == null || str.isEmpty()) {
-        return false;
-    }
-
-    // Validação do primeiro caractere
-    if (!Character.isLetter(str.charAt(0)) || str.charAt(0) == '_') {
-        return false;
-    }
-
-    // Validação de caracteres subsequentes
-    for (int i = 1; i < str.length(); i++) {
-        char c = str.charAt(i);
-
-        // Validação de letras e dígitos
-        if (!Character.isLetterOrDigit(c)) {
-            if (c != '_') {
-                return false;
-            }
-        }
-
-        // Validação de caracteres inválidos específicos
-        if (c == '@' || c == '!' || c == '#' || c == '~' || c == '`' || c == 'º' || c == 'ª'
-                || c == 'á' || c == 'à' || c == 'é' || c == 'è' || c == 'ã' || c == 'â' || c == 'ê' || c == 'õ'
-                || c == 'ó' || c == 'ò' || c == 'ç') {
-            return false;
-        }
-    }
-
-    return true;
-}*/
-
-    public String validar(String palavra) {
-        // String lexema = palavra.trim(); // Remove espaços em branco do início e do fim
-
-        if (verificarPalavraReservada(palavra)) {
-            /*  
-            if(palavra.equalsIgnoreCase("integer")||palavra.equalsIgnoreCase("char")||palavra.equalsIgnoreCase("boolean")){
-                return "<Value_Type>";
-            }
-            if(palavra.equalsIgnoreCase("div")){
-                return "<>";
-            }
-            if(palavra.equalsIgnoreCase("if")){
-                return "<>";
-            }
-             */
-            return RESERVADA;
-        } else if (verificarDigito(palavra)) {
-            return DIGITO;
-        } else if (verificarOperador(palavra)) {
-            return OPERADOR;
-        } else if (verificarOperadorAtribuicao(palavra)) {
-            return SINAL_ATRIBUICAO;
-        } else if (verificarOperadorRelacional(palavra)) {
-            return OPERADOR_RELACIONAL;
-        } else if (verificarDelimitador(palavra)) {
-            return DELIMITADOR;
-        } else if (isValidPascalIdentifier(palavra)) {
-            return IDENTIFICADOR;
-        } else {
-            return ERRO;
-        }
-    }
-
-    private boolean verificarPalavraReservada(String palavra) {
-        return PALAVRAS_RESERVADAS.contains(palavra.toLowerCase());
-    }
-
-    private boolean verificarDigito(String palavra) {
-        return palavra.matches(DIGITOS);
-    }
-
-    private boolean verificarOperador(String palavra) {
-        return OPERADORES.contains(palavra);
-    }
-
-    private boolean verificarOperadorAtribuicao(String palavra) {
-        return Sinal_Atrib.equals(palavra);
-    }
-
-    private boolean verificarOperadorRelacional(String palavra) {
-        return OPERADORES_RELACIONAIS.contains(palavra);
-    }
-
-    private boolean verificarDelimitador(String palavra) {
-        return DELIMITADORES.contains(palavra);
-    }
-    
-    
-    /*
-    public static void main(String[] args) {
-        String identificador = "_12sad";
-        if (isValidPascalIdentifier(identificador)) {
-            System.out.println("e um identificador valido em Pascal.");
-        } else {
-            System.out.println("Nao e um identificador valido em Pascal.");
-        }
-        System.out.println("");
-    }
-     */
+    }*/
 }

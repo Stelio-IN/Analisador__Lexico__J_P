@@ -9,7 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -24,14 +23,10 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -105,28 +100,27 @@ public class controller implements Initializable {
         txtDuracao.clear();
     }
 
-@FXML
-void reload(ActionEvent event) {
-    tabela_Resultado.getItems().clear();
-    txtDuracao.clear();
+    @FXML
+    void reload(ActionEvent event) {
+        tabela_Resultado.getItems().clear();
+        txtDuracao.clear();
 
-    // Criar uma instância de Timer
-    Timer timer = new Timer();
+        // Criar uma instância de Timer
+        Timer timer = new Timer();
 
-    // Criar uma tarefa que será executada após 3 segundos
-    TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            // código executado após a espera
-            Platform.runLater(() -> executar_codigo(event)); // Usar Platform.runLater() para executar código na thread da interface gráfica
-            timer.cancel(); // Cancelar o Timer após a execução da tarefa
-        }
-    };
+        // Criar uma tarefa que será executada após 3 segundos
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                // código executado após a espera
+                Platform.runLater(() -> executar_codigo(event)); // Usar Platform.runLater() para executar código na thread da interface gráfica
+                timer.cancel(); // Cancelar o Timer após a execução da tarefa
+            }
+        };
 
-    // Agendar a tarefa para ser executada 
-    timer.schedule(task, 1000);
-}
-
+        // Agendar a tarefa para ser executada 
+        timer.schedule(task, 1000);
+    }
 
     @FXML
     void carregar_arquivo(ActionEvent event) {
@@ -249,55 +243,96 @@ void reload(ActionEvent event) {
 
             // Atribuição
             if (c == ':') {
-                if (i + 1 < linha.length() && linha.charAt(i + 1) == '=') {
+                int fimPalavra = i + 1;
+                if (fimPalavra < linha.length() && linha.charAt(fimPalavra) == '=') {
                     partes.add(":=");
                     i += 2;
                     continue;
                 } else {
                     partes.add(Character.toString(c));
+                    i++;
+                    continue;
                 }
-            } else // Identificadores e palavras-chave
+            }
+
+            //comparacao 
+            if (c == '=') {
+                partes.add(Character.toString(c));
+                i++;
+                continue;
+            }
+
+            // Delimitadores
+            if (c == '/' || c == ',') {
+                partes.add(Character.toString(c));
+                i++;
+                continue;
+            }
+
             if (Character.isLetter(c)) {
                 int fimPalavra = i + 1;
-                while (fimPalavra < linha.length() && (Character.isLetterOrDigit(linha.charAt(fimPalavra)) || linha.charAt(fimPalavra) == '_')) {
+                while (fimPalavra < linha.length() && linha.charAt(fimPalavra) != ' '
+                        && linha.charAt(fimPalavra) != '+'
+                        && linha.charAt(fimPalavra) != '-'
+                        && linha.charAt(fimPalavra) != '*'
+                        && linha.charAt(fimPalavra) != ';'
+                        && linha.charAt(fimPalavra) != '('
+                        && linha.charAt(fimPalavra) != ')'
+                        && linha.charAt(fimPalavra) != '['
+                        && linha.charAt(fimPalavra) != ']'
+                        && linha.charAt(fimPalavra) != '='
+                        && linha.charAt(fimPalavra) != ':'
+                        && linha.charAt(fimPalavra) != '/') {
                     fimPalavra++;
                 }
                 String palavra = linha.substring(i, fimPalavra);
                 partes.add(palavra);
                 i = fimPalavra;
                 continue;
-            } else // Números
+            }
+
+            // Números
             if (Character.isDigit(c)) {
                 int fimNumero = i + 1;
-                while (fimNumero < linha.length() && Character.isDigit(linha.charAt(fimNumero))) {
+                while (fimNumero < linha.length() && linha.charAt(fimNumero) != ' '
+                        && linha.charAt(fimNumero) != '+'
+                        && linha.charAt(fimNumero) != '-'
+                        && linha.charAt(fimNumero) != '*'
+                        && linha.charAt(fimNumero) != ';'
+                        && linha.charAt(fimNumero) != '('
+                        && linha.charAt(fimNumero) != ')'
+                        && linha.charAt(fimNumero) != '['
+                        && linha.charAt(fimNumero) != ']'
+                        && linha.charAt(fimNumero) != '='
+                        && linha.charAt(fimNumero) != ':'
+                        && linha.charAt(fimNumero) != '/') {
                     fimNumero++;
                 }
                 String numero = linha.substring(i, fimNumero);
                 partes.add(numero);
                 i = fimNumero;
                 continue;
-            } else // Delimitadores
-            if (c == '/' || c == ',') {
-                partes.add(Character.toString(c));
-                i++;
-                continue;
-            } else //erro para string que comeca com _
-            //((c == '_')|| (c == '@') || c == '!') 
-            if (c == '_') {
-                int fimPalavra = i + 1;
-                while (fimPalavra < linha.length() && (Character.isLetterOrDigit(linha.charAt(fimPalavra)) || linha.charAt(fimPalavra) == '_')) {
-                    fimPalavra++;
-                }
-                String palavra = linha.substring(i, fimPalavra);
-                partes.add(palavra);
-                i = fimPalavra;
-                continue;
             } else {
-                partes.add(Character.toString(c));
-                i++;
+                int fimAleatorio = i + 1;
+                while (fimAleatorio < linha.length() && linha.charAt(fimAleatorio) != ' '
+                        && linha.charAt(fimAleatorio) != '+'
+                        && linha.charAt(fimAleatorio) != '-'
+                        && linha.charAt(fimAleatorio) != '*'
+                        && linha.charAt(fimAleatorio) != ';'
+                        && linha.charAt(fimAleatorio) != '('
+                        && linha.charAt(fimAleatorio) != ')'
+                        && linha.charAt(fimAleatorio) != '['
+                        && linha.charAt(fimAleatorio) != ']'
+                        && linha.charAt(fimAleatorio) != '='
+                        && linha.charAt(fimAleatorio) != ':'
+                        && linha.charAt(fimAleatorio) != '/') {
+                    fimAleatorio++;
+                }
+                String numero = linha.substring(i, fimAleatorio);
+                partes.add(numero);
+                i = fimAleatorio;
+                continue;
             }
-            // Ignora outros caracteres
-//            i++;
         }
 
         return partes;
