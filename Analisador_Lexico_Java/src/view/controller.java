@@ -298,7 +298,7 @@ public class controller implements Initializable {
             }
 
             // Delimitadores
-            if (c == '/' || c == ',') {
+            if (c == '/' || c == ',' || c == '/' || c == '.') {
                 partes.add(Character.toString(c));
                 i++;
                 continue;
@@ -349,7 +349,9 @@ public class controller implements Initializable {
                         && linha.charAt(fimPalavra) != ']'
                         && linha.charAt(fimPalavra) != '='
                         && linha.charAt(fimPalavra) != ':'
-                        && linha.charAt(fimPalavra) != '/') {
+                        && linha.charAt(fimPalavra) != '/'
+                        && linha.charAt(fimPalavra) != ','
+                        && linha.charAt(fimPalavra) != '.') {
                     fimPalavra++;
                 }
                 String palavra = linha.substring(i, fimPalavra);
@@ -372,7 +374,9 @@ public class controller implements Initializable {
                         && linha.charAt(fimNumero) != ']'
                         && linha.charAt(fimNumero) != '='
                         && linha.charAt(fimNumero) != ':'
-                        && linha.charAt(fimNumero) != '/') {
+                        && linha.charAt(fimNumero) != '/'
+                        && linha.charAt(fimNumero) != ','
+                        && linha.charAt(fimNumero) != '.' ) {
                     fimNumero++;
                 }
                 String numero = linha.substring(i, fimNumero);
@@ -392,7 +396,9 @@ public class controller implements Initializable {
                         && linha.charAt(fimAleatorio) != ']'
                         && linha.charAt(fimAleatorio) != '='
                         && linha.charAt(fimAleatorio) != ':'
-                        && linha.charAt(fimAleatorio) != '/') {
+                        && linha.charAt(fimAleatorio) != '/'
+                        && linha.charAt(fimAleatorio) != ','
+                        && linha.charAt(fimAleatorio) != '.') {
                     fimAleatorio++;
                 }
                 String numero = linha.substring(i, fimAleatorio);
@@ -413,5 +419,12 @@ public class controller implements Initializable {
     @FXML
     void menu_2(ActionEvent event) {
         // salvar_ficheiro(event); // Chama o método salvar_ficheiro passando o evento original
+    }
+    
+    
+    @FXML
+    void new_file(ActionEvent event) {
+        txt_area.clear();
+        txt_area.setFocusTraversable(true);
     }
 }
