@@ -8,12 +8,22 @@ package model;
 public class Token {
     private String nome_token;
     private String nome_lexema;
-    private String linha_token;
+    private int linha_token;
+    private String categoria_token;
 
-    public Token(String nome_token, String nome_lexema, String linha_token) {
+    public Token(String nome_token, String nome_lexema, int linha_token, String categoria_token) {
         this.nome_token = nome_token;
         this.nome_lexema = nome_lexema;
         this.linha_token = linha_token;
+        this.categoria_token = categoria_token;
+    }
+
+    public String getCategoria_token() {
+        return categoria_token;
+    }
+
+    public void setCategoria_token(String categoria_token) {
+        this.categoria_token = categoria_token;
     }
 
     public String getNome_token() {
@@ -32,13 +42,15 @@ public class Token {
         this.nome_lexema = nome_lexema;
     }
 
-    public String getLinha_token() {
+    public int getLinha_token() {
         return linha_token;
     }
 
-    public void setLinha_token(String linha_token) {
+    public void setLinha_token(int linha_token) {
         this.linha_token = linha_token;
     }
+
+ 
 
     @Override
     public String toString() {

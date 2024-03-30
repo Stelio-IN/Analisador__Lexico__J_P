@@ -23,6 +23,8 @@ public class Analisador_Lexico_Java extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setResizable(false); 
+        stage.setMaximized(false);
         stage.show();
     }
 

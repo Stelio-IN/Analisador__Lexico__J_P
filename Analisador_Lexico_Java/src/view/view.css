@@ -1,0 +1,71 @@
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #bcbcbc;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f4f4f4;
+}
+
+.table-view .column-header-background .label {
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #bcbcbc transparent;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-cell {
+    -fx-alignment: CENTER;
+    -fx-padding: 0.333333em;
+}
+
+.table-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-cell:selected {
+    -fx-background-color: #d0d0d0;
+}
+
+.table-cell:filled:selected {
+    -fx-background-color: #b0b0b0;
+}
+
+.table-view:focused {
+    -fx-background-color: #e0e0e0;
+}
+
+.table-view:focused .table-row-cell:selected {
+    -fx-background-color: #a0a0a0;
+}
+
+.table-view:focused .table-cell:selected {
+    -fx-background-color: #909090;
+}
+
+.text-area {
+    -fx-background-color: #ffffff; /* Cor de fundo */
+    -fx-border-color: #bcbcbc; /* Cor da borda */
+    -fx-border-width: 1px; /* Largura da borda */
+    -fx-padding: 5px; /* Espaçamento interno */
+    -fx-font-size: 14px; /* Tamanho da fonte */
+}
+
+.custom-vbox {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bcbcbc;
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}

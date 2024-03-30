@@ -2,45 +2,84 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
     <children>
-      <AnchorPane prefHeight="600.0" prefWidth="800.0">
+      <AnchorPane prefHeight="600.0" prefWidth="900.0">
          <children>
-            <TableView fx:id="tabela_Resultado" layoutX="-2.0" layoutY="400.0" prefHeight="200.0" prefWidth="806.0">
+            <TableView fx:id="tabela_Resultado" layoutX="548.0" layoutY="80.0" prefHeight="520.0" prefWidth="613.0" stylesheets="@view.css">
               <columns>
-                <TableColumn fx:id="col_linha" prefWidth="75.0" text="Linha" />
-                <TableColumn fx:id="col_lexema" prefWidth="376.0" text="Lexema" />
-                  <TableColumn fx:id="col_token" prefWidth="354.0" text="Token" />
+                <TableColumn fx:id="col_linha" prefWidth="47.0" text="Linha" />
+                <TableColumn fx:id="col_lexema" prefWidth="153.0" text="Lexema" />
+                  <TableColumn fx:id="col_token" prefWidth="162.0" text="Token" />
+                  <TableColumn fx:id="col_categoria" prefWidth="249.0" text="Categoria Token" />
               </columns>
             </TableView>
-            <TextArea fx:id="txt_area" layoutX="47.0" layoutY="55.0" prefHeight="323.0" prefWidth="413.0" />
-            <TextField fx:id="txtDuracao" layoutX="613.0" layoutY="222.0" prefHeight="43.0" prefWidth="118.0" text="5s" />
             <Text layoutX="631.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <Label layoutX="613.0" layoutY="189.0" prefHeight="26.0" prefWidth="118.0" text="Tempo de execução" />
-            <Pane layoutX="472.0" layoutY="56.0" prefHeight="90.0" prefWidth="324.0" style="-fx-background-color: #ccc;">
+            <Pane layoutY="32.0" prefHeight="48.0" prefWidth="1161.0" style="-fx-background-color: #ccc;">
                <children>
-                  <Button layoutX="18.0" layoutY="20.0" mnemonicParsing="false" onAction="#executar_codigo" prefHeight="50.0" prefWidth="91.0" text="PLAY" />
-                  <Button layoutX="120.0" layoutY="20.0" mnemonicParsing="false" onAction="#limpar" prefHeight="50.0" prefWidth="84.0" text="CLEAR" />
-                  <Button layoutX="220.0" layoutY="20.0" mnemonicParsing="false" onAction="#reload" prefHeight="50.0" prefWidth="84.0" text="RELOAD" />
+                  <Button layoutX="95.0" layoutY="12.0" mnemonicParsing="false" onAction="#carregar_arquivo" text="LOAD_FILE" />
+                  <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#salvar_ficheiro" text="SAVE_FILE" />
+                  <Button layoutX="186.0" layoutY="11.0" mnemonicParsing="false" onAction="#executar_codigo" prefHeight="25.0" prefWidth="91.0" text="PLAY" />
+                  <Button layoutX="398.0" layoutY="11.0" mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="84.0" text="RELOAD" />
+                  <Button layoutX="299.0" layoutY="12.0" mnemonicParsing="false" onAction="#limpar" prefHeight="25.0" prefWidth="84.0" text="CLEAR" />
+                  <Label layoutX="581.0" layoutY="11.0" prefHeight="26.0" prefWidth="91.0" text="Execução(ms):" />
+                  <TextField fx:id="txtDuracao" layoutX="671.0" layoutY="12.0" prefHeight="16.0" prefWidth="44.0" promptText="0" />
+                  <Label layoutX="735.0" layoutY="12.0" prefHeight="26.0" prefWidth="97.0" text="Numero_Erros:" />
+                  <TextField fx:id="txtErros" layoutX="831.0" layoutY="13.0" prefHeight="16.0" prefWidth="44.0" promptText="0" />
                </children>
             </Pane>
-            <VBox fx:id="lineNumbersBox" layoutX="14.0" layoutY="55.0" prefHeight="323.0" prefWidth="30.0" style="-fx-background-color: #ccc;" />
-            <HBox layoutX="-3.0" layoutY="8.0" prefHeight="26.0" prefWidth="804.0" style="-fx-background-color: #ccc;">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#carregar_arquivo" text="LOAD_FILE" />
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#salvar_ficheiro" text="SAVE_FILE" />
-               </children>
-            </HBox>
+            <ScrollPane layoutY="80.0" maxHeight="520.0" prefHeight="520.0" prefWidth="550.0">
+               <content>
+                  <BorderPane maxHeight="516.0" maxWidth="548.0" prefHeight="516.0" prefWidth="564.0">
+                     <left>
+                        <VBox fx:id="lineNumbersBox" maxHeight="517.0" prefHeight="506.0" prefWidth="32.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <right>
+                        <TextArea fx:id="txt_area" prefHeight="550.0" prefWidth="516.0" BorderPane.alignment="CENTER" />
+                     </right>
+                  </BorderPane>
+               </content>
+            </ScrollPane>
+            <MenuBar prefHeight="32.0" prefWidth="1161.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File  ">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="New" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#menu_1" text="Open File" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#menu_2" text="Save" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                        <RadioMenuItem mnemonicParsing="false" text="Theme_Dark" />
+                        <RadioMenuItem mnemonicParsing="false" text="Theme_White" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="About">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Criador" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
          </children>
       </AnchorPane>
     </children>

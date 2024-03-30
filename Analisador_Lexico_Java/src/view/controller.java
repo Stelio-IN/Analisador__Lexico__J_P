@@ -27,6 +27,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -35,6 +36,8 @@ public class controller implements Initializable {
 
     @FXML
     private TableColumn<Token, String> col_lexema;
+    @FXML
+    private TableColumn<Token, String> col_categoria;
 
     @FXML
     private TableColumn<Token, String> col_linha;
@@ -53,6 +56,9 @@ public class controller implements Initializable {
 
     @FXML
     private VBox lineNumbersBox; // Injetar o VBox do arquivo FXML
+
+    @FXML
+    private TextField txtErros;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,14 +170,19 @@ public class controller implements Initializable {
     @FXML
     void executar_codigo(ActionEvent event) {
         long startTime = System.currentTimeMillis();
+
+        int quantidade_erros = 0;
         List<Token> lista = new ArrayList<>();
+
         if (!txt_area.getText().equals(' ')) {
+
             ArrayList<String> linhas = dividirTextoEmLinhas(txt_area.getText());
             int i = 0;
+
             for (String linha : linhas) {
                 //    System.out.println(linha);
 
-                List<String> partes = analisarLexicamente(linha); // AQUI está a mudança
+                List<String> partes = dividirValidarCaracteres(linha);
 
                 AnalisadorV1 analisador = new AnalisadorV1();
 
@@ -179,17 +190,40 @@ public class controller implements Initializable {
                 for (String parte : partes) {
                     // Validando a parte atual
 
-                    String resultado = analisador.validar(parte);
-                    Token teste = new Token(resultado, parte, String.valueOf(i));
+                    String[] resultado = analisador.validar(parte);
+
+                    if (resultado[1].equalsIgnoreCase("erro")) {
+                        quantidade_erros++;
+                    }
+                    Token teste = new Token(resultado[0], parte, i, resultado[1]);
                     lista.add(teste);
                 }
             }
             col_lexema.setCellValueFactory(new PropertyValueFactory<>("nome_lexema"));
             col_token.setCellValueFactory(new PropertyValueFactory<>("nome_token"));
             col_linha.setCellValueFactory(new PropertyValueFactory<>("linha_token"));
+            col_categoria.setCellValueFactory(new PropertyValueFactory<>("categoria_token"));
 
             ObservableList<Token> observableList = FXCollections.observableArrayList(lista);
             tabela_Resultado.setItems(observableList);
+            // Configurar a fábrica de linhas da tabela para aplicar estilos às linhas com erros
+            tabela_Resultado.setRowFactory(tv -> new TableRow<Token>() {
+                @Override
+                protected void updateItem(Token token, boolean empty) {
+                    super.updateItem(token, empty);
+                    if (token == null || token.getCategoria_token() == null) {
+                        return;
+                    }
+                    // Verificar se a categoria do token é "erro"
+                    if (token.getCategoria_token().equalsIgnoreCase("erro")) {
+                        // Aplicar estilo à linha
+                        setStyle("-fx-background-color: #FFCCCC;"); // Cor de fundo vermelha para indicar erro
+                    } else {
+                        // Se não for um erro, limpar o estilo
+                        setStyle("");
+                    }
+                }
+            });
 
         }
         // Obter o tempo de término
@@ -199,6 +233,7 @@ public class controller implements Initializable {
         long duration = endTime - startTime;
 
         txtDuracao.setText(String.valueOf(duration));
+        txtErros.setText(String.valueOf(quantidade_erros));
 
     }
 
@@ -212,7 +247,7 @@ public class controller implements Initializable {
     }
 
     //Metodo para dividir e validar caracteres 
-    public static List<String> analisarLexicamente(String linha) {
+    public static List<String> dividirValidarCaracteres(String linha) {
         List<String> partes = new ArrayList<>();
         int i = 0;
 
@@ -267,6 +302,38 @@ public class controller implements Initializable {
                 partes.add(Character.toString(c));
                 i++;
                 continue;
+            }
+
+            //condicionais maior e maior_igual
+            if (c == '>') {
+                int fimPalavra = i + 1;
+                if (fimPalavra < linha.length() && linha.charAt(fimPalavra) == '=') {
+                    partes.add(">=");
+                    i += 2;
+                    continue;
+                } else {
+                    partes.add(Character.toString(c));
+                    i++;
+                    continue;
+                }
+            }
+
+            //condicionais menor e menor_igual
+            if (c == '<') {
+                int fimPalavra = i + 1;
+                if (fimPalavra < linha.length() && linha.charAt(fimPalavra) == '=') {
+                    partes.add("<=");
+                    i += 2;
+                    continue;
+                } else if (fimPalavra < linha.length() && linha.charAt(fimPalavra) == '>') {
+                    partes.add("<>");
+                    i += 2;
+                    continue;
+                } else {
+                    partes.add(Character.toString(c));
+                    i++;
+                    continue;
+                }
             }
 
             if (Character.isLetter(c)) {
@@ -336,5 +403,15 @@ public class controller implements Initializable {
         }
 
         return partes;
+    }
+
+    @FXML
+    void menu_1(ActionEvent event) {
+        //  carregar_arquivo(event); // Chama o método carregar_arquivo passando o evento original
+    }
+
+    @FXML
+    void menu_2(ActionEvent event) {
+        // salvar_ficheiro(event); // Chama o método salvar_ficheiro passando o evento original
     }
 }
