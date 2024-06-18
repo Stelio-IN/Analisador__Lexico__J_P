@@ -4,6 +4,9 @@ package controller;
  *
  * @author steli
  */
+import static java.lang.Character.isDigit;
+import static java.lang.Character.isLetter;
+import static java.lang.Character.isLetterOrDigit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,10 +20,6 @@ public class AnalisadorV1 {
     private final String IDENTIFICADOR = "Identificador";
     private final String OPERADOR_RELACIONAL = "Operador relacional";
     private final String SINAL_ATRIBUICAO = "Operador de atribuicao";
-
-    private static final String DIGITOS = "[0-9]+";
-
-    private static String IDENTIFICADOREXPRESSAO = "[a-zA-Z_]+([0-9_]*[a-zA-Z]*)*";
 
     private static final List<String> PALAVRAS_RESERVADAS = Arrays.asList(
             "div", "or", "and", "not", "if", "then", "else", "of", "Record", "while",
@@ -45,39 +44,6 @@ public class AnalisadorV1 {
 
     private static final char especial = '\'';
 
-    /*
-    public String validar(String palavra) {
-        // String lexema = palavra.trim(); // Remove espaços em branco do início e do fim
-
-        if (verificarPalavraReservada(palavra)) {
-            
-            if(palavra.equalsIgnoreCase("integer")||palavra.equalsIgnoreCase("char")||palavra.equalsIgnoreCase("boolean")){
-                return "<Value_Type>";
-            }
-            if(palavra.equalsIgnoreCase("array")){
-                return "<Array_Type>";
-            }
-            if(palavra.equalsIgnoreCase("if")){
-                return "<>";
-            }
-            
-            return RESERVADA;
-        } else if (verificarDigito(palavra)) {
-            return DIGITO;
-        } else if (verificarOperador(palavra)) {
-            return OPERADOR;
-        } else if (verificarOperadorAtribuicao(palavra)) {
-            return SINAL_ATRIBUICAO;
-        } else if (verificarOperadorRelacional(palavra)) {
-            return OPERADOR_RELACIONAL;
-        } else if (verificarDelimitador(palavra)) {
-            return DELIMITADOR;
-        } else if (verificarIdentificador(palavra)) {
-            return IDENTIFICADOR;
-        } else {
-            return ERRO;
-        }
-    }*/
     public String[] validar(String palavra) {
         String[] strings = new String[2];
         strings[0] = "";
@@ -159,7 +125,7 @@ public class AnalisadorV1 {
                 strings[1] = "special_symbol";
             }
 
-        } else if (verificarDigito(palavra)) {
+        } else if (isDigitsOnly(palavra)) {
             strings[0] = "<digito>";
             strings[1] = "digito";
         } else if (verificarOperador(palavra)) {
@@ -228,10 +194,13 @@ public class AnalisadorV1 {
                 strings[0] = "<dois_pontos>";
                 strings[1] = "special_symbol";
             }
-        } else if (verificarIdentificador(palavra)) {
+        } else if (isValidIdentifier(palavra)) {
             strings[0] = "<identificador>";
             strings[1] = "identificador";
-        } else {
+        } else if (verificarString(palavra)) {
+            strings[0] = "<String>";
+            strings[1] = "texto";
+        }  else {
             strings[0] = "<erro>";
             strings[1] = "erro";
         }
@@ -241,14 +210,14 @@ public class AnalisadorV1 {
     private boolean verificarPalavraReservada(String palavra) {
         return PALAVRAS_RESERVADAS.contains(palavra.toLowerCase());
     }
-
+/*
     private boolean verificarDigito(String palavra) {
         return palavra.matches(DIGITOS);
-    }
+    }*/
 
-    private boolean verificarIdentificador(String palavra) {
+   /* private boolean verificarIdentificador(String palavra) {
         return palavra.matches(IDENTIFICADOREXPRESSAO);
-    }
+    }*/
 
     private boolean verificarOperador(String palavra) {
         return OPERADORES.contains(palavra);
@@ -266,28 +235,49 @@ public class AnalisadorV1 {
         return DELIMITADORES.contains(palavra);
     }
 
-    /*
-    public static boolean isValidPascalIdentifier(String str) {
-        if (str == null || str.isEmpty()) {
+    private boolean verificarString(String palavra) {
+        if (palavra.charAt(0) == '\'' && palavra.charAt(palavra.length() - 1) == '\'' && palavra.length()>=3) {
+            return true;
+        } else {
             return false;
+
         }
-        char firstChar = str.charAt(0);
-        if (!Character.isLetter(firstChar) && firstChar == '_') {
-            return false; // O primeiro caractere deve ser uma letra ou sublinhado (_)
-        }
-        if (str.startsWith("@")||str.startsWith("!")||str.startsWith("#")||str.startsWith("~")||str.startsWith("'")
-                ||str.startsWith("´") ||str.startsWith("º")||str.startsWith("ª") ||str.startsWith("á")
-                ||str.startsWith("à")||str.startsWith("é")||str.startsWith("è")||str.startsWith("ã")||str.startsWith("â")
-                ||str.startsWith("ê")||str.startsWith("õ")||str.startsWith("ó")||str.startsWith("ò")||str.startsWith("ç")) {
+
+    }
+      public static boolean isValidIdentifier(String s) {
+        if (s == null || s.isEmpty()) {
             return false;
         }
 
-        for (int i = 1; i < str.length(); i++) {
-            char c = str.charAt(i);
-            if (!Character.isLetterOrDigit(c) && c != '_') {
-                return false; // Os caracteres subsequentes devem ser letras, dígitos ou sublinhados (_)
+        // Verifica o primeiro caractere
+        char firstChar = s.charAt(0);
+        if (!isLetter(firstChar)) {
+            return false;
+        }
+
+        // Verifica os caracteres subsequentes
+        for (int i = 1; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!isLetterOrDigit(c) && c != '_') {
+                return false;
+            }
+        }
+
+        return true;
+    }
+      
+       public static boolean isDigitsOnly(String s) {
+        if (s == null || s.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!isDigit(c)) {
+                return false;
             }
         }
         return true;
-    }*/
+    }
+
 }

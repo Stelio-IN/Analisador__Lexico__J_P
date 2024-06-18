@@ -69,3 +69,21 @@
     -fx-padding: 5px;
     -fx-font-size: 14px;
 }
+.notebook-textarea {
+    -fx-text-fill: black;  /* Text color */
+    -fx-font-family: monospace;  /* Monospaced font for consistent spacing */
+    -fx-font-size: 14px;  /* Font size */
+    -fx-line-spacing: 10px;  /* Spacing between lines */
+    -fx-background-color: #fdf6e3;  /* Background color similar to notebook paper */
+    -fx-border-color: #d3d3d3;  /* Border color for a subtle border */
+    -fx-border-width: 1px;  /* Border width */
+    -fx-padding: 10px;  /* Padding around the text */
+}
+
+.table-view-placeholder {
+  -fx-background-color: #f0f0f0; /* Background color */
+  -fx-text-fill: #808080; /* Text color */
+  -fx-font-size: 14px; /* Font size */
+  -fx-padding: 10px; /* Padding around the text */
+  -fx-alignment: center; /* Center the text */
+}

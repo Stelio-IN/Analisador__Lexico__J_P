@@ -85,7 +85,9 @@ public class controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
         txtDuracao.setDisable(true);
+        txtErros.setDisable(true);
         txt_area.setWrapText(true); // Habilita quebra automática de linha
         lineNumbersBox.setStyle("-fx-padding: 0 5 0 5;"); // Adiciona padding
         updateLineNumbers(txt_area.getText()); // Atualiza os contadores de linhas iniciais
@@ -95,9 +97,17 @@ public class controller implements Initializable {
             updateLineNumbers(newValue); // Atualiza os contadores de linhas quando o texto muda
         });
         txt_area.setText(pascalProgram);
-        tabela_Resultado.setPlaceholder(new Label(""));
+        //  txt_area.setPromptText(pascalProgram);
+         Label placeholText = new Label("TOKENS");
+        placeholText.getStyleClass().add("table-view-placeholder");
+        
+        tabela_Resultado.setPlaceholder(placeholText);
 
-        tabela_Erro.setPlaceholder(new Label(""));
+      //  tabela_Erro.setPlaceholder(new Label(""));
+
+        Label placeholderLabel = new Label("ERROS");
+        placeholderLabel.getStyleClass().add("table-view-placeholder");
+        tabela_Erro.setPlaceholder(placeholderLabel);
 
     }
 
@@ -128,8 +138,9 @@ public class controller implements Initializable {
     @FXML
     void limpar(ActionEvent event) {
         txt_area.clear();
-        tabela_Resultado.getItems().clear();
         txtDuracao.clear();
+        tabela_Resultado.getItems().clear();
+        tabela_Erro.getItems().clear();
     }
 
     @FXML
@@ -199,7 +210,7 @@ public class controller implements Initializable {
 
         int quantidade_erros = 0;
         List<Token> lista = new ArrayList<>();
-        
+
         List<Token_Erro> lista_erro = new ArrayList<>();
 
         if (!txt_area.getText().equals(' ')) {
@@ -221,9 +232,11 @@ public class controller implements Initializable {
                     String[] resultado = analisador.validar(parte);
 
                     if (resultado[1].equalsIgnoreCase("erro")) {
+                        quantidade_erros++;
+
                         Token_Erro token_erro = new Token_Erro(parte, classificadorErros(parte));
                         lista_erro.add(token_erro);
-                        quantidade_erros++;
+
                     }
                     Token teste = new Token(resultado[0], parte, i, resultado[1]);
                     lista.add(teste);
@@ -340,6 +353,21 @@ public class controller implements Initializable {
                 continue;
             }
 
+            if (c == '\'') {
+                int fimPalavra = i + 1;
+                while (fimPalavra < linha.length() && linha.charAt(fimPalavra) != '\'') {
+                    fimPalavra++;
+                }
+                // Include the closing quote
+                if (fimPalavra < linha.length()) {
+                    fimPalavra++;
+                }
+                String palavra = linha.substring(i, fimPalavra);
+                partes.add(palavra);
+                i = fimPalavra; // Move to the character after the closing quote
+                continue;
+            }
+
             //condicionais maior e maior_igual
             if (c == '>') {
                 int fimPalavra = i + 1;
@@ -387,6 +415,7 @@ public class controller implements Initializable {
                         && linha.charAt(fimPalavra) != ':'
                         && linha.charAt(fimPalavra) != '/'
                         && linha.charAt(fimPalavra) != ','
+                        && linha.charAt(fimPalavra) != '\''
                         && linha.charAt(fimPalavra) != '.') {
                     fimPalavra++;
                 }
@@ -412,6 +441,7 @@ public class controller implements Initializable {
                         && linha.charAt(fimNumero) != ':'
                         && linha.charAt(fimNumero) != '/'
                         && linha.charAt(fimNumero) != ','
+                        && linha.charAt(fimNumero) != '\''
                         && linha.charAt(fimNumero) != '.') {
                     fimNumero++;
                 }
@@ -446,8 +476,6 @@ public class controller implements Initializable {
 
         return partes;
     }
-    
-    
 
     @FXML
     void menu_1(ActionEvent event) {
@@ -464,9 +492,58 @@ public class controller implements Initializable {
         txt_area.clear();
         txt_area.setFocusTraversable(true);
     }
-    
-    public String classificadorErros(String erro){
-        
-        return "<Try to change that cheat>";
+  public String classificadorErros(String erro) {
+        if (erro.isEmpty()) {
+            return "<Erro: A string está vazia>";
+        }
+
+        // Verifica se começa com aspas e não tem fechamento
+        if (erro.charAt(0) == '\'') {
+            if (!erro.endsWith("'")) {
+                return "<Erro: Feche a abertura de aspas>";
+            } else if (erro.length() == 1) {
+                return "<Erro: String de aspas vazia>";
+            } else {
+                return "<Erro: Remova a aspa inicial>";
+            }
+        }
+
+        // Verifica se começa com caracteres especiais como !@#$&%
+        char firstChar = erro.charAt(0);
+        if ("!@#$&%".indexOf(firstChar) != -1) {
+            return "<Erro: Remova os caracteres especiais do início>";
+        }
+
+        // Verifica se há números seguidos de letras ou caracteres especiais no meio da string
+        boolean hasNumber = false;
+        boolean hasLetter = false;
+        boolean hasSpecial = false;
+
+        for (int i = 0; i < erro.length(); i++) {
+            char c = erro.charAt(i);
+
+            if (Character.isDigit(c)) {
+                hasNumber = true;
+                if (hasLetter || hasSpecial) {
+                    return "<Erro: Remova o número seguido de letra ou caractere especial>";
+                }
+            } else if (Character.isLetter(c)) {
+                hasLetter = true;
+                if (hasNumber) {
+                    return "<Erro: Remova o texto depois do número>";
+                }
+            } else if ("!@#$&%".indexOf(c) != -1) {
+                hasSpecial = true;
+                if (hasLetter) {
+                    return "<Erro: Remova os caracteres especiais>";
+                }
+            } else if (!Character.isLetterOrDigit(c) && c != '_') {
+                return "<Erro: Caractere inválido encontrado>";
+            }
+        }
+
+        // Caso não se enquadre nos erros conhecidos
+        return "<Sem sugestão: Erro não classificado>";
     }
+
 }
