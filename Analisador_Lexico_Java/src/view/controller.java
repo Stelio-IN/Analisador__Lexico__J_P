@@ -27,10 +27,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Token_Erro;
 
 public class controller implements Initializable {
 
@@ -46,10 +48,30 @@ public class controller implements Initializable {
     private TableColumn<Token, String> col_token;
 
     @FXML
+    private TableColumn<Token, String> col_Erro;
+
+    @FXML
+    private TableColumn<Token, String> col_Sugestao;
+
+    @FXML
     private TableView<Token> tabela_Resultado;
 
     @FXML
+    private TableView<Token_Erro> tabela_Erro;
+
+    @FXML
     private TextField txtDuracao;
+
+    String pascalProgram = "program GreetUser;\n"
+            + "var\n"
+            + "  userName: string;\n"
+            + "\n"
+            + "begin\n"
+            + "  write('Enter your name: ');\n"
+            + "  readln(userName);\n"
+            + "\n"
+            + "  writeln('Hello, ', userName, '!');\n"
+            + "end.";
 
     @FXML
     private TextArea txt_area;
@@ -72,6 +94,10 @@ public class controller implements Initializable {
         txt_area.textProperty().addListener((observable, oldValue, newValue) -> {
             updateLineNumbers(newValue); // Atualiza os contadores de linhas quando o texto muda
         });
+        txt_area.setText(pascalProgram);
+        tabela_Resultado.setPlaceholder(new Label(""));
+
+        tabela_Erro.setPlaceholder(new Label(""));
 
     }
 
@@ -173,6 +199,8 @@ public class controller implements Initializable {
 
         int quantidade_erros = 0;
         List<Token> lista = new ArrayList<>();
+        
+        List<Token_Erro> lista_erro = new ArrayList<>();
 
         if (!txt_area.getText().equals(' ')) {
 
@@ -193,6 +221,8 @@ public class controller implements Initializable {
                     String[] resultado = analisador.validar(parte);
 
                     if (resultado[1].equalsIgnoreCase("erro")) {
+                        Token_Erro token_erro = new Token_Erro(parte, classificadorErros(parte));
+                        lista_erro.add(token_erro);
                         quantidade_erros++;
                     }
                     Token teste = new Token(resultado[0], parte, i, resultado[1]);
@@ -224,6 +254,12 @@ public class controller implements Initializable {
                     }
                 }
             });
+
+            col_Erro.setCellValueFactory(new PropertyValueFactory<>("erro"));
+            col_Sugestao.setCellValueFactory(new PropertyValueFactory<>("sugestao"));
+
+            ObservableList<Token_Erro> observableListErros = FXCollections.observableArrayList(lista_erro);
+            tabela_Erro.setItems(observableListErros);
 
         }
         // Obter o tempo de término
@@ -376,7 +412,7 @@ public class controller implements Initializable {
                         && linha.charAt(fimNumero) != ':'
                         && linha.charAt(fimNumero) != '/'
                         && linha.charAt(fimNumero) != ','
-                        && linha.charAt(fimNumero) != '.' ) {
+                        && linha.charAt(fimNumero) != '.') {
                     fimNumero++;
                 }
                 String numero = linha.substring(i, fimNumero);
@@ -410,6 +446,8 @@ public class controller implements Initializable {
 
         return partes;
     }
+    
+    
 
     @FXML
     void menu_1(ActionEvent event) {
@@ -420,11 +458,15 @@ public class controller implements Initializable {
     void menu_2(ActionEvent event) {
         // salvar_ficheiro(event); // Chama o método salvar_ficheiro passando o evento original
     }
-    
-    
+
     @FXML
     void new_file(ActionEvent event) {
         txt_area.clear();
         txt_area.setFocusTraversable(true);
+    }
+    
+    public String classificadorErros(String erro){
+        
+        return "<Try to change that cheat>";
     }
 }

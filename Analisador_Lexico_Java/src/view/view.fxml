@@ -24,7 +24,7 @@
     <children>
       <AnchorPane prefHeight="600.0" prefWidth="900.0">
          <children>
-            <TableView fx:id="tabela_Resultado" layoutX="548.0" layoutY="80.0" prefHeight="520.0" prefWidth="613.0" stylesheets="@view.css">
+            <TableView fx:id="tabela_Resultado" layoutX="548.0" layoutY="80.0" prefHeight="303.0" prefWidth="613.0" stylesheets="@view.css">
               <columns>
                 <TableColumn fx:id="col_linha" prefWidth="47.0" text="Linha" />
                 <TableColumn fx:id="col_lexema" prefWidth="153.0" text="Lexema" />
@@ -38,7 +38,7 @@
                   <Label layoutX="581.0" layoutY="11.0" prefHeight="26.0" prefWidth="91.0" text="Execução(ms):" />
                   <TextField fx:id="txtDuracao" layoutX="671.0" layoutY="12.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: aqua; -fx-border-width: 0px 0px 1px 0px;" />
                   <Label layoutX="735.0" layoutY="12.0" prefHeight="26.0" prefWidth="97.0" text="Numero_Erros:" />
-                  <TextField fx:id="txtErros" layoutX="831.0" layoutY="13.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: aqua; -fx-border-width: 0px 0px 1px 0px;" />
+                  <TextField fx:id="txtErros" layoutX="831.0" layoutY="13.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 0px 0px 1px 0px;" />
                   <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="26.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/new_file_0.png" />
@@ -113,6 +113,12 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <TableView fx:id="tabela_Erro" layoutX="548.0" layoutY="383.0" prefHeight="217.0" prefWidth="613.0">
+              <columns>
+                <TableColumn fx:id="col_Erro" prefWidth="118.0" text="Erro" />
+                <TableColumn fx:id="col_Sugestao" prefWidth="494.0" text="Sugestao" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
     </children>
