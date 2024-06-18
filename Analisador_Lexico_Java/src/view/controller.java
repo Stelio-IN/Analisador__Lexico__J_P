@@ -26,6 +26,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
@@ -98,16 +99,17 @@ public class controller implements Initializable {
         });
         txt_area.setText(pascalProgram);
         //  txt_area.setPromptText(pascalProgram);
-         Label placeholText = new Label("TOKENS");
+        Label placeholText = new Label("TOKENS");
         placeholText.getStyleClass().add("table-view-placeholder");
-        
+
         tabela_Resultado.setPlaceholder(placeholText);
 
-      //  tabela_Erro.setPlaceholder(new Label(""));
-
+        //  tabela_Erro.setPlaceholder(new Label(""));
         Label placeholderLabel = new Label("ERROS");
         placeholderLabel.getStyleClass().add("table-view-placeholder");
         tabela_Erro.setPlaceholder(placeholderLabel);
+
+        lineNumbersBox.getStyleClass().add("bordered-vbox");
 
     }
 
@@ -141,6 +143,24 @@ public class controller implements Initializable {
         txtDuracao.clear();
         tabela_Resultado.getItems().clear();
         tabela_Erro.getItems().clear();
+    }
+
+    private Stage stage;
+
+    @FXML
+    void fechar(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    void minimizar(ActionEvent event) {
+        if (stage != null) {
+            stage.setIconified(true);
+        }
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     @FXML
@@ -492,7 +512,8 @@ public class controller implements Initializable {
         txt_area.clear();
         txt_area.setFocusTraversable(true);
     }
-  public String classificadorErros(String erro) {
+
+    public String classificadorErros(String erro) {
         if (erro.isEmpty()) {
             return "<Erro: A string está vazia>";
         }
@@ -507,11 +528,28 @@ public class controller implements Initializable {
                 return "<Erro: Remova a aspa inicial>";
             }
         }
+        
+           // Verifica se tem mais de um caractere especial consecutivo
+        for (int i = 0; i < erro.length() - 1; i++) {
+            char c = erro.charAt(i);
+            char nextC = erro.charAt(i + 1);
+
+            if ("!@#$&%".indexOf(c) != -1 && "!@#$&%".indexOf(nextC) != -1) {
+                return "<Erro: Remova os caracteres especiais consecutivos>";
+            }
+        }
+
 
         // Verifica se começa com caracteres especiais como !@#$&%
         char firstChar = erro.charAt(0);
         if ("!@#$&%".indexOf(firstChar) != -1) {
             return "<Erro: Remova os caracteres especiais do início>";
+        }
+
+        // Verifica se termina com caracteres especiais como !@#$&%
+        char lastChar = erro.charAt(erro.length() - 1);
+        if ("!@#$&%".indexOf(lastChar) != -1) {
+            return "<Erro: Remova os caracteres especiais do final>";
         }
 
         // Verifica se há números seguidos de letras ou caracteres especiais no meio da string
@@ -542,6 +580,7 @@ public class controller implements Initializable {
             }
         }
 
+     
         // Caso não se enquadre nos erros conhecidos
         return "<Sem sugestão: Erro não classificado>";
     }

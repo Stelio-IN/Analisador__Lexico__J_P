@@ -1,0 +1,10 @@
+.bordered-vbox {
+ /*   -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-padding: 10px;  Adiciona um padding opcional */
+     -fx-background-color: #ffffff; /* Cor de fundo */
+    -fx-border-color: #f4f4f4; /* Cor da borda */
+    -fx-border-width: 10px 1px 1px 1px; /* Largura da borda (superior, direita, inferior, esquerda) */
+    -fx-font-size: 13px; /* Tamanho da fonte */
+}
