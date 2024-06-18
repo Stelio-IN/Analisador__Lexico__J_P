@@ -16,20 +16,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
     <children>
-      <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ccc;">
+      <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4e8d7;">
          <children>
-            <TableView fx:id="tabela_Resultado" layoutX="563.0" layoutY="80.0" prefHeight="275.0" prefWidth="590.0" stylesheets="@view.css">
+            <TableView fx:id="tabela_Resultado" layoutX="563.0" layoutY="80.0" prefHeight="275.0" prefWidth="590.0" style="-fx-background-color: #fff;" stylesheets="@view.css">
               <columns>
-                <TableColumn fx:id="col_linha" prefWidth="47.0" text="Linha" />
-                <TableColumn fx:id="col_lexema" prefWidth="153.0" text="Lexema" />
-                  <TableColumn fx:id="col_token" prefWidth="162.0" text="Token" />
-                  <TableColumn fx:id="col_categoria" prefWidth="249.0" text="Categoria Token" />
+                <TableColumn fx:id="col_linha" prefWidth="47.0" style="-fx-background-color: #ccbeab;" text="Linha" />
+                <TableColumn fx:id="col_lexema" prefWidth="153.0" style="-fx-background-color: #ccbeab;" text="Lexema" />
+                  <TableColumn fx:id="col_token" prefWidth="162.0" style="-fx-background-color: #ccbeab;" text="Token" />
+                  <TableColumn fx:id="col_categoria" prefWidth="249.0" style="-fx-background-color: #ccbeab;" text="Categoria Token" />
               </columns>
             </TableView>
             <Text layoutX="631.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <Pane layoutY="32.0" prefHeight="48.0" prefWidth="1161.0" style="-fx-background-color: #ccc;">
+            <Pane layoutY="32.0" prefHeight="48.0" prefWidth="1161.0" style="-fx-background-color: #f4e8d7;">
                <children>
                   <Label layoutX="581.0" layoutY="11.0" prefHeight="26.0" prefWidth="91.0" text="Execução(ms):" />
                   <TextField fx:id="txtDuracao" layoutX="671.0" layoutY="12.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: aqua; -fx-border-width: 0px 0px 1px 0px;" />
@@ -73,11 +73,11 @@
                   <Button layoutX="346.0" layoutY="11.0" mnemonicParsing="false" onAction="#limpar" prefHeight="25.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
                </children>
             </Pane>
-            <ScrollPane layoutX="10.0" layoutY="80.0" maxHeight="520.0" prefHeight="510.0" prefWidth="536.0">
+            <ScrollPane layoutX="10.0" layoutY="80.0" maxHeight="520.0" prefHeight="510.0" prefWidth="536.0" style="-fx-background-color: #f4e8d7;">
                <content>
-                  <BorderPane maxHeight="516.0" maxWidth="548.0" prefHeight="516.0" prefWidth="564.0">
+                  <BorderPane maxHeight="516.0" maxWidth="548.0" prefHeight="516.0" prefWidth="564.0" style="-fx-background-color: #f4e8d7;">
                      <left>
-                        <VBox fx:id="lineNumbersBox" maxHeight="517.0" prefHeight="506.0" prefWidth="32.0" spacing="0.5" style="-fx-background-color: #CCC;" stylesheets="@bordered-vbox.css" BorderPane.alignment="CENTER" />
+                        <VBox fx:id="lineNumbersBox" maxHeight="517.0" prefHeight="506.0" prefWidth="32.0" spacing="0.5" style="-fx-background-color: #f4e8d7;" stylesheets="@bordered-vbox.css" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
                         <TextArea fx:id="txt_area" prefHeight="550.0" prefWidth="516.0" stylesheets="@view.css" BorderPane.alignment="CENTER" />
@@ -85,7 +85,7 @@
                      <top>
                         <AnchorPane prefHeight="33.0" prefWidth="548.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="181.0" layoutY="9.0" prefHeight="21.0" prefWidth="227.0" text="Analisador Lexico 3000" textFill="#2c3132">
+                              <Label layoutX="181.0" layoutY="9.0" prefHeight="21.0" prefWidth="227.0" text="Analisador Lexico 3000" textFill="#917c62">
                                  <font>
                                     <Font name="Cooper Black" size="14.0" />
                                  </font>
@@ -98,8 +98,8 @@
             </ScrollPane>
             <TableView fx:id="tabela_Erro" layoutX="563.0" layoutY="383.0" prefHeight="207.0" prefWidth="590.0" stylesheets="@view.css">
               <columns>
-                <TableColumn fx:id="col_Erro" prefWidth="118.0" text="Erro" />
-                <TableColumn fx:id="col_Sugestao" prefWidth="494.0" text="Sugestao" />
+                <TableColumn fx:id="col_Erro" prefWidth="118.0" style="-fx-background-color: #ccbeab;" text="Erro" />
+                <TableColumn fx:id="col_Sugestao" prefWidth="494.0" style="-fx-background-color: #ccbeab;" text="Sugestao" />
               </columns>
             </TableView>
             <Label layoutX="773.0" layoutY="356.0" prefHeight="27.0" prefWidth="71.0" text="erros" textFill="#c34c4c">
@@ -117,7 +117,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <AnchorPane prefHeight="29.0" prefWidth="1161.0" style="-fx-background-color: #787373;">
+            <AnchorPane prefHeight="29.0" prefWidth="1161.0" style="-fx-background-color: #ccbeab;">
                <children>
                   <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="1121.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -131,7 +131,7 @@
                   </ImageView>
                   <Button layoutX="1064.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimizar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
                   <Button layoutX="1120.0" layoutY="2.0" mnemonicParsing="false" onAction="#fechar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
-                  <Label layoutX="27.0" layoutY="4.0" prefHeight="21.0" prefWidth="54.0" text="ANL@IN" textFill="#1b1b1b">
+                  <Label layoutX="27.0" layoutY="4.0" prefHeight="21.0" prefWidth="54.0" text="ANL@IN" textFill="#917c62">
                      <font>
                         <Font name="Bauhaus 93" size="16.0" />
                      </font>
