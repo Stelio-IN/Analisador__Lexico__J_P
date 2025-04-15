@@ -11,13 +11,5 @@ package controller;
 public class Teste {
     public static void main(String[] args) {
         System.out.println("hello wosadasdsad");
-            System.out.println("hello wosadasdsad");
-                System.out.println("hello wosadasdsad");    System.out.println("hello wosadasdsad");    System.out.println("hello wosadasdsad");
-                    System.out.println("hello wosadasdsad");
-                        System.out.println("hello wosadasdsad");
-                        
-           sadsad         
-                
-                
     }
 }
