@@ -11,16 +11,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
+<AnchorPane id="AnchorPane" maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller">
     <children>
       <AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #ccc;">
          <children>
-            <TableView fx:id="tabela_Resultado" layoutX="563.0" layoutY="80.0" prefHeight="275.0" prefWidth="590.0" stylesheets="@view.css">
+            <TableView fx:id="tabela_Resultado" layoutX="563.0" layoutY="80.0" prefHeight="315.0" prefWidth="590.0" stylesheets="@table.css">
               <columns>
                 <TableColumn fx:id="col_linha" prefWidth="47.0" text="Linha" />
                 <TableColumn fx:id="col_lexema" prefWidth="153.0" text="Lexema" />
@@ -31,46 +32,10 @@
             <Text layoutX="631.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" />
             <Pane layoutY="32.0" prefHeight="48.0" prefWidth="1161.0" style="-fx-background-color: #ccc;">
                <children>
-                  <Label layoutX="581.0" layoutY="11.0" prefHeight="26.0" prefWidth="91.0" text="Execução(ms):" />
-                  <TextField fx:id="txtDuracao" layoutX="671.0" layoutY="12.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: aqua; -fx-border-width: 0px 0px 1px 0px;" />
-                  <Label layoutX="735.0" layoutY="12.0" prefHeight="26.0" prefWidth="97.0" text="Numero_Erros:" />
-                  <TextField fx:id="txtErros" layoutX="831.0" layoutY="13.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: red; -fx-border-width: 0px 0px 1px 0px;" />
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="26.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/new_file_0.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="95.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/open_folder_0.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="232.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/play_01.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="353.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/clear_0.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="295.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/reload_0.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="32.0" fitWidth="29.0" layoutX="158.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/save_file.png" />
-                     </image>
-                  </ImageView>
-                  <Button layoutX="21.0" layoutY="12.0" mnemonicParsing="false" onAction="#new_file" prefHeight="25.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="88.0" layoutY="12.0" mnemonicParsing="false" onAction="#carregar_arquivo" prefHeight="25.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="152.0" layoutY="11.0" mnemonicParsing="false" onAction="#salvar_ficheiro" prefHeight="25.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="229.0" layoutY="11.0" mnemonicParsing="false" onAction="#executar_codigo" prefHeight="25.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="291.0" layoutY="12.0" mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="346.0" layoutY="11.0" mnemonicParsing="false" onAction="#limpar" prefHeight="25.0" prefWidth="44.0" style="-fx-background-color: transparent;" />
+                  <Label layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="67.0" text="Time(ms):" />
+                  <TextField fx:id="txtDuracao" layoutX="70.0" layoutY="13.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0px 0px 1px 0px;" />
+                  <Label layoutX="443.0" layoutY="14.0" prefHeight="26.0" prefWidth="44.0" text="Erros:" />
+                  <TextField fx:id="txtErros" layoutX="477.0" layoutY="14.0" prefHeight="16.0" prefWidth="44.0" promptText="0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 0px 0px 1px 0px;" />
                </children>
             </Pane>
             <ScrollPane layoutX="10.0" layoutY="80.0" maxHeight="520.0" prefHeight="510.0" prefWidth="536.0">
@@ -83,11 +48,16 @@
                         <TextArea fx:id="txt_area" prefHeight="550.0" prefWidth="516.0" stylesheets="@view.css" BorderPane.alignment="CENTER" />
                      </right>
                      <top>
-                        <AnchorPane prefHeight="33.0" prefWidth="548.0" BorderPane.alignment="CENTER">
+                        <AnchorPane prefHeight="33.0" prefWidth="548.0" style="-fx-background-color: #343a40;" BorderPane.alignment="CENTER">
                            <children>
-                              <Label layoutX="181.0" layoutY="9.0" prefHeight="21.0" prefWidth="227.0" text="Analisador Lexico 3000" textFill="#2c3132">
+                              <Label layoutX="181.0" layoutY="9.0" prefHeight="21.0" prefWidth="227.0" textFill="#2c3132">
                                  <font>
                                     <Font name="Cooper Black" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="474.0" layoutY="6.0" prefHeight="21.0" prefWidth="54.0" text="\@IN" textFill="#1b1b1b">
+                                 <font>
+                                    <Font name="Bauhaus 93" size="16.0" />
                                  </font>
                               </Label>
                            </children>
@@ -96,46 +66,90 @@
                   </BorderPane>
                </content>
             </ScrollPane>
-            <TableView fx:id="tabela_Erro" layoutX="563.0" layoutY="383.0" prefHeight="207.0" prefWidth="590.0" stylesheets="@view.css">
+            <TableView fx:id="tabela_Erro" layoutX="563.0" layoutY="406.0" prefHeight="184.0" prefWidth="590.0" stylesheets="@table.css">
               <columns>
                 <TableColumn fx:id="col_Erro" prefWidth="118.0" text="Erro" />
                 <TableColumn fx:id="col_Sugestao" prefWidth="494.0" text="Sugestao" />
               </columns>
             </TableView>
-            <Label layoutX="773.0" layoutY="356.0" prefHeight="27.0" prefWidth="71.0" text="erros" textFill="#c34c4c">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="894.0" layoutY="356.0" prefHeight="27.0" prefWidth="116.0" text="sugestões " textFill="#3c4e97">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="844.0" layoutY="356.0" prefHeight="27.0" prefWidth="29.0" text="&amp; ">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <AnchorPane prefHeight="29.0" prefWidth="1161.0" style="-fx-background-color: #787373;">
+            <AnchorPane prefHeight="26.0" prefWidth="1161.0" style="-fx-background-color: #787373;">
                <children>
-                  <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="1121.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="1119.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/exit.png" />
+                        <Image url="@../img/circle-xmark.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="1065.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="1061.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../img/mini_2.png" />
+                        <Image url="@../img/down-left-and-up-right-to-center.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="1064.0" layoutY="2.0" mnemonicParsing="false" onAction="#minimizar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
-                  <Button layoutX="1120.0" layoutY="2.0" mnemonicParsing="false" onAction="#fechar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
-                  <Label layoutX="27.0" layoutY="4.0" prefHeight="21.0" prefWidth="54.0" text="ANL@IN" textFill="#1b1b1b">
-                     <font>
-                        <Font name="Bauhaus 93" size="16.0" />
-                     </font>
-                  </Label>
+                  <Button layoutX="1060.0" layoutY="7.0" mnemonicParsing="false" onAction="#minimizar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
+                  <Button layoutX="1118.0" layoutY="6.0" mnemonicParsing="false" onAction="#fechar" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
+                  <HBox layoutX="14.0" layoutY="7.0" prefHeight="34.0" prefWidth="224.0">
+                     <children>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="42.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/add-document.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="-2.0" layoutY="1.0" mnemonicParsing="false" onAction="#new_file" prefHeight="26.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="36.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/folder-open.png" />
+                                 </image>
+                              </ImageView>
+                              <Button mnemonicParsing="false" onAction="#carregar_arquivo" prefHeight="25.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="36.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/disk.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="1.0" layoutY="2.0" mnemonicParsing="false" onAction="#salvar_ficheiro" prefHeight="25.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="36.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/play-circle.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="5.0" layoutY="2.0" mnemonicParsing="false" onAction="#executar_codigo" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="36.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/rotate-right.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="6.0" layoutY="1.0" mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="41.0" layoutY="50.0" prefHeight="27.0" prefWidth="36.0">
+                           <children>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="8.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/broom.png" />
+                                 </image>
+                              </ImageView>
+                              <Button layoutX="-1.0" layoutY="2.0" mnemonicParsing="false" onAction="#limpar" prefHeight="26.0" prefWidth="36.0" style="-fx-background-color: transparent;" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
